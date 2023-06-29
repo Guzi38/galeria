@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'Galerie (kategorie)'|trans }}
+{% endblock %}
+
+{% block body %}
+
+    <h1>{{ 'Galerie (kategorie)'|trans }}</h1>
+    {% if pagination is defined and pagination.items|length %}
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+        <table class="buttons">
+        <thead>
+        <tr>
+            <th><a href="{{ url('gallery_create') }}" title="{{ 'action.create'|trans }}" class="btn">
+                    {{ 'stwórz galerie'|trans }}
+                </a>
+            </th>
+        </tr>
+        </thead>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'Id'|trans, 'gallery.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Created_at'|trans, 'gallery.createdAt') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Updated_at'|trans, 'gallery.updatedAt') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Title'|trans, 'gallery.title') }}</th>
+                <th>{{ 'Actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for gallery in pagination.items %}
+                <tr>
+                    <td>{{ gallery.id }}</td>
+                    <td>{{ gallery.createdAt|format_date('long') }}</td>
+                    <td>{{ gallery.updatedAt|format_date('long') }}</td>
+                    <td>{{ gallery.title }}</td>
+                    <td>
+                        {% if is_granted('EDIT', gallery) %}
+                            <a href="{{ url('gallery_edit', {id: gallery.id}) }}" title="{{ 'action.edit'|trans }}" class="btn">
+                                {{ 'edytuj'|trans }}
+                            </a>
+                        {% endif %}
+                        {% if is_granted('VIEW', gallery) %}
+                            <a href="{{ url('gallery_show', {id: gallery.id}) }}" title="{{ 'action.show'|trans }}" class="btn">
+                                {{ 'zobacz'|trans }}
+                            </a>
+                        {% endif %}
+                        {% if is_granted('DELETE', gallery) %}
+                            <a href="{{ url('gallery_delete', {id: gallery.id}) }}" title="{{ 'action.delete'|trans }}" class="btn">
+                                {{ 'usuń'|trans }}
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+    {% else %}
+        <p>
+            {{ 'message.empty_list'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}

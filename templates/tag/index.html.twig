@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'Tagi'|trans }}
+{% endblock %}
+
+{% block body %}
+
+    <h1>{{ 'Tagi'|trans }}</h1>
+    {% if pagination is defined and pagination.items|length %}
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+        <table class="buttons">
+        <thead>
+        <tr>
+            <th>
+                <a href="{{ url('tag_create') }}" title="{{ 'action.create'|trans }}" class="btn">
+                    {{ 'stwórz tag'|trans }}
+                </a>
+            </th>
+        </tr>
+        </thead>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'Id'|trans, 'tag.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Created_at'|trans, 'tag.createdAt') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Updated_at'|trans, 'tag.updatedAt') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Title'|trans, 'tag.title') }}</th>
+                <th>{{ 'Actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tag in pagination.items %}
+                <tr>
+                    <td>{{ tag.id }}</td>
+                    <td>{{ tag.createdAt|format_date('long') }}</td>
+                    <td>{{ tag.updatedAt|format_date('long') }}</td>
+                    <td>{{ tag.title }}</td>
+                    <td>
+                        {% if is_granted('VIEW', tag) %}
+                            <a href="{{ url('tag_show', {id: tag.id}) }}" title="{{ 'action.show'|trans }}" class="btn">
+                                {{ 'zobacz'|trans }}
+                            </a>
+                        {% endif %}
+                        {% if is_granted('EDIT', tag) %}
+                            <a href="{{ url('tag_edit', {id: tag.id}) }}" title="{{ 'action.edit'|trans }}" class="btn">
+                                {{ 'edytuj'|trans }}
+                            </a>
+                        {% endif %}
+                        {% if is_granted('DELETE', tag) %}
+                            <a href="{{ url('tag_delete', {id: tag.id}) }}" title="{{ 'action.delete'|trans }}" class="btn">
+                                {{ 'usuń'|trans }}
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+    {% else %}
+        <p>
+            {{ 'message.empty_list'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}
