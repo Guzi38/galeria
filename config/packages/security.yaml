@@ -43,6 +43,11 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/login, roles: PUBLIC_ACCESS}
         - { path: ^/register, roles: PUBLIC_ACCESS}
+        - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/gallery, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/photo, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/comment, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/tag, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_USER}
 
 when@test:

@@ -1,29 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title.photo_list'|trans }}
+    {{ 'Zdjęcia'|trans }}
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title.photo_list'|trans }}</h1>
+    <h1>{{ 'Zdjęcia'|trans }}</h1>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <p>
-            <a href="{{ url('photo_create') }}" title="{{ 'action.create'|trans }}">
+            <a href="{{ url('photo_create') }}" title="{{ 'action.create'|trans }}" class="btn">
                 {{ 'action.create'|trans }}
             </a>
         </p>
     {% endif %}
     {% if pagination is defined and pagination.items|length %}
 
-        <table class="table table-bordered">
+        <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'photo.id') }}</th>
-                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.date'|trans, 'photo.date') }}</th>
-                <th scope="col">{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'photo.title') }}</th>
-                <th scope="col">{{ 'label.actions'|trans }}</th>
-                <th scope="col">{{ 'label.gallery'|trans }}</th>
-                <th scope="col">{{ 'label.tag'|trans }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'id'|trans, 'photo.id') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'data publikacji'|trans, 'photo.createdAt') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(pagination, 'tytuł'|trans, 'photo.title') }}</th>
+                <th scope="col">{{ 'akcje'|trans }}</th>
+                <th scope="col">{{ 'galerie'|trans }}</th>
+                <th scope="col">{{ 'tagi'|trans }}</th>
 
             </tr>
             </thead>
@@ -34,15 +34,15 @@
                     <td>{{ photo.createdAt|date('d/m/Y') }}</td>
                     <td>{{ photo.title }}</td>
                     <td>
-                        <a href="{{ url('photo_show', {id: photo.id}) }}" title="{{ 'action.view'|trans }}">
-                            {{ 'action.view'|trans }}
+                        <a href="{{ url('photo_show', {id: photo.id}) }}" title="{{ 'action.view'|trans }}" class="btn">
+                            {{ 'zobacz'|trans }}
                         </a>
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            <a href="{{ url('photo_edit', {id: photo.id}) }}" title="{{ 'action.edit'|trans }}">
-                                {{ 'action.edit'|trans }}
+                            <a href="{{ url('photo_edit', {id: photo.id}) }}" title="{{ 'action.edit'|trans }}" class="btn">
+                                {{ 'edytuj'|trans }}
                             </a>
-                            <a href="{{ url('photo_delete', {id: photo.id}) }}" title="{{ 'action.delete'|trans }}">
-                                {{ 'action.delete'|trans }}
+                            <a href="{{ url('photo_delete', {id: photo.id}) }}" title="{{ 'action.delete'|trans }}" class="btn">
+                                {{ 'usuń'|trans }}
                             </a>
                         {% endif %}
                     </td>
@@ -59,8 +59,8 @@
                                 </a>
                             {% endfor %}
                         {% else %}
+                            {{ 'brak'|trans }}
                         {% endif %}
-
                     </td>
                 </tr>
             {% endfor %}

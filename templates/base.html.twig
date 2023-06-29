@@ -36,6 +36,16 @@
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <a class="nav-item nav-link" href="{{ path('app_logout') }}">Wyloguj: {{ app.user.userIdentifier }}</a>
             {% endif %}
+
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="nav-item nav-link" href="{{ path('app_login') }}">Zaloguj się</a>
+            {% endif %}
+
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="nav-item nav-link" href="{{ path('app_register') }}">Zarejestruj się</a>
+            {% endif %}
+
+
         </div>
     </div>
 </nav>

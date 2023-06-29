@@ -7,22 +7,21 @@
 {% block body %}
 
     <h1>{{ 'Tagi'|trans }}</h1>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <p>
+            <a href="{{ url('tag_create') }}" title="{{ 'action.create'|trans }}" class="btn">
+                {{ 'stwórz tag'|trans }}
+            </a>
+        </p>
+    {% endif %}
+
     {% if pagination is defined and pagination.items|length %}
 
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>
 
-        <table class="buttons">
-        <thead>
-        <tr>
-            <th>
-                <a href="{{ url('tag_create') }}" title="{{ 'action.create'|trans }}" class="btn">
-                    {{ 'stwórz tag'|trans }}
-                </a>
-            </th>
-        </tr>
-        </thead>
+
 
         <table class="table table-striped">
             <thead>
