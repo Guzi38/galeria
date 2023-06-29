@@ -15,15 +15,15 @@
     {% endif %}
     {% if pagination is defined and pagination.items|length %}
 
-        <table class="table table-striped">
+        <table class="table table-bordered">
             <thead>
             <tr>
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'id'|trans, 'photo.id') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'data publikacji'|trans, 'photo.createdAt') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(pagination, 'tytuł'|trans, 'photo.title') }}</th>
-                <th scope="col">{{ 'akcje'|trans }}</th>
                 <th scope="col">{{ 'galerie'|trans }}</th>
                 <th scope="col">{{ 'tagi'|trans }}</th>
+                <th scope="col">{{ 'akcje'|trans }}</th>
 
             </tr>
             </thead>
@@ -33,19 +33,6 @@
                     <td>{{ photo.id }}</td>
                     <td>{{ photo.createdAt|date('d/m/Y') }}</td>
                     <td>{{ photo.title }}</td>
-                    <td>
-                        <a href="{{ url('photo_show', {id: photo.id}) }}" title="{{ 'action.view'|trans }}" class="btn">
-                            {{ 'zobacz'|trans }}
-                        </a>
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            <a href="{{ url('photo_edit', {id: photo.id}) }}" title="{{ 'action.edit'|trans }}" class="btn">
-                                {{ 'edytuj'|trans }}
-                            </a>
-                            <a href="{{ url('photo_delete', {id: photo.id}) }}" title="{{ 'action.delete'|trans }}" class="btn">
-                                {{ 'usuń'|trans }}
-                            </a>
-                        {% endif %}
-                    </td>
                     <td>
                         <a href="{{ url('photo_index', {'filters.gallery_id' : photo.gallery.id}) }}" title="{{ photo.gallery.title }}">
                             {{ photo.gallery.title }}
@@ -62,6 +49,20 @@
                             {{ 'brak'|trans }}
                         {% endif %}
                     </td>
+                    <td>
+                        <a href="{{ url('photo_show', {id: photo.id}) }}" title="{{ 'action.view'|trans }}" class="btn">
+                            {{ 'zobacz'|trans }}
+                        </a>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <a href="{{ url('photo_edit', {id: photo.id}) }}" title="{{ 'action.edit'|trans }}" class="btn">
+                                {{ 'edytuj'|trans }}
+                            </a>
+                            <a href="{{ url('photo_delete', {id: photo.id}) }}" title="{{ 'action.delete'|trans }}" class="btn">
+                                {{ 'usuń'|trans }}
+                            </a>
+                        {% endif %}
+                    </td>
+
                 </tr>
             {% endfor %}
             </tbody>
